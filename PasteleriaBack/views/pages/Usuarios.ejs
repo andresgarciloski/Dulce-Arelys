@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-danger-subtle ">
+    <div class="container-fluid">
+        <img src="/images/cake-icon.png" style="width: 60px" alt="">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="Inicio">Datos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="Pedidos-Cotizaciones">Pedidos / Cotizaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Existencia">Existencia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="Usuarios">Usuarios</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="d-flex flex-column justify-content-center align-items-center mt-5" >
+    <h2>Usuarios.</h2>
+    <div class="table-responsive">
+        <table class="table table-hover table-borderless">
+            <thead>
+            <tr>
+                <th>ID Usuario</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Telefono</th>
+                <th>Correo</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" id="UsuariosID">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+<script>
+    addEventListener('DOMContentLoaded', () => {
+        const UsuariosID = document.getElementById('UsuariosID')
+        UsuariosID.innerHTML = ''
+        fetch('/api/v1/Usuarios')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(Usuarios => {
+                    UsuariosID.innerHTML +=
+                        `<tr id="fila-${Usuarios.IdUsuario}">
+                           <td>${Usuarios.NombreUsuario}</td>
+                           <td>${Usuarios.ApellidoUsuario}</td>
+                           <td>${Usuarios.TelefonoUsuario}</td>
+                           <td>${Usuarios.CorreoUsuario}</td>
+                           <td>
+                               <div class="dropdown">
+                                   <button class="btn btn-default dropdown-toggle" type="button"
+                                           data-bs-toggle="dropdown" aria-expanded="false">Opciones</button>
+                                   <ul class="dropdown-menu">
+                                       <li>
+                                           <a href="Usuarios/${Usuarios.IdUsuario}" class="dropdown-item">Actualizar</a>
+                                       </li>
+                                        <li>
+                                           <button onclick="handleEliminar('${Usuarios.IdUsuario}')" class="dropdown-item">Eliminar</button>
+                                       </li>
+                                   </ul>
+                               </div>
+                           </td>
+                       </tr>
+                   `
+                })
+                console.log(data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    })
+
+    const handleEliminar = (id) => {
+        fetch(`api/v1/Usuario/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`fila-${id}`).remove()
+                console.log(data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+</script>
