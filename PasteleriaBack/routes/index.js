@@ -133,15 +133,22 @@ router.post('/api/v1/Aceptados', function(req, res, next) {
 
 router.post('/api/v1/Cotizacion', function(req, res, next) {
   const { id_Usuario, tam_Pastel, sabor_Pastel, betun_Pastel, relleno_Pastel, cantidad, pastel_Precio, pastel_Comentarios } = req.body;
+
+  // Verificar si los datos son válidos
+  if (!id_Usuario || !tam_Pastel || !sabor_Pastel || !betun_Pastel || !relleno_Pastel || !cantidad || !pastel_Precio) {
+    return res.status(400).json({ error: 'Faltan datos requeridos' });
+  }
+
   const query = 'INSERT INTO dulce_arelys.Cotizacion (IdUsuario, TamanoCotizacion, SaborCotizacion, BetunCotizacion, RellenoCotizacion, Cantidad, PrecioCotizacion, ComentariosCotizacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  
   db.query(query, [id_Usuario, tam_Pastel, sabor_Pastel, betun_Pastel, relleno_Pastel, cantidad, pastel_Precio, pastel_Comentarios], function(err, result) {
     if (err) {
-      console.log(err);
-      return res.status(500).json('error');
+      console.log(err); // Aquí puedes también imprimir los errores de la base de datos
+      return res.status(500).json({ error: 'Hubo un error al guardar la cotización.' });
     }
-    res.status(200).json(result);
+    res.status(200).json({ message: 'Cotización guardada correctamente', result });
   });
-})
+});
 
 router.get('/Existencia', function(req, res, next) {
   res.render('pages/Existencia');
@@ -173,6 +180,9 @@ router.get('/api/v1/Productos/:id', function(req, res, next) {
     res.status(200).json(result);
   })
 })
+
+
+
 
 router.put('/api/v1/Productos', upload.single('ImagenProducto'),function(req, res, next) {
     const { IdProducto, NombreProducto, DescripcionProducto, PrecioProducto, ExistenciaProducto } = req.body;

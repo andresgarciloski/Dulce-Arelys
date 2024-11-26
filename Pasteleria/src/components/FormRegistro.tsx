@@ -12,7 +12,7 @@ const FormRegistro = () => {
 
   const handleRegistro = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const URL = "http://10.100.45.100:3000/api/v1/Registro";
+    const URL = "http://localhost:3000/api/v1/Registro";
     const data = {
       Nombre,
       Apellido,

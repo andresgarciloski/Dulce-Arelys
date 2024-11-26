@@ -6,7 +6,7 @@ const FormSesion = () => {
 
   const handleSeion = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const URL = "http://10.100.45.100:3000/api/v1/inicioSesion";
+    const URL = "http://localhost:3000/api/v1/inicioSesion";
     const data = {
       correo,
       pass,
@@ -25,9 +25,16 @@ const FormSesion = () => {
           return;
         }
         const Usuerio = JSON.stringify(data[0]);
+         // Aquí obtienes el idRol del usuario
+         const idRol = data[0].IdRol; 
+
         localStorage.setItem("id", data[0].IdUsuario);
         localStorage.setItem("Usuario", Usuerio);
+        localStorage.setItem("idRol", idRol); 
+
+
         window.location.reload()
+        window.location.href = "http://localhost:3000/Inicio"
       })
       .catch((error) => {
         console.error("Error:", error);

@@ -26,7 +26,7 @@ const Perfil = () => {
     const handleActualizar = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const URL = "http://10.100.45.100:3000/api/v1/ActualizarUsuario"
+        const URL = "http://localhost:3000/api/v1/ActualizarUsuario"
         const data = {
         NombreUsuario: Nombre,
         ApellidoUsuario: Apellido,

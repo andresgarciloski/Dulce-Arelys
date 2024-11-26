@@ -24,7 +24,7 @@ const Cotiza = () => {
     id_Usuario === "" && setAlert(true)
     id_Usuario === "" &&  setTimeout(() => { setAlert(false) }, 3000)
     if (id_Usuario === "") return;
-    const URL = "http://10.100.45.100:3000/api/v1/Cotizacion"
+    const URL = "http://localhost:3000/api/v1/Cotizacion"
     const data = {
       id_Usuario, 
       tam_Pastel, 
