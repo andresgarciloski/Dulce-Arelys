@@ -1,0 +1,6 @@
+
+Para correr el Front: 
+- Colocar powershell en la carpeta "Pasteleria". 
+- Asegurarse que estén los modulos de node.js.
+- Colocar el comando "npm run dev"
+
