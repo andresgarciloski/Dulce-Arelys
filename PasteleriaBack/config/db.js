@@ -1,10 +1,10 @@
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
-    host: 'localhost',  // Reemplaza con tu servidor en Azure
-    user: 'root',                // Reemplaza con tu usuario de Azure
-    password: 'gabrielMonroy1905.',                     // Reemplaza con tu contraseña
-    database: 'dulce_arelys',                      // El nombre de la base de datos en Azure
+    host: 'localhost', 
+    user: 'root',               
+    password: 'root',                    
+    database: 'dulce_arelys',                      
 });
 
 connection.connect((err) => {
@@ -12,7 +12,7 @@ connection.connect((err) => {
         console.error('Error al conectar: ', err);
         throw err;
     }
-    console.log('Conexión exitosa a la base de datos en Azure');
+    console.log('Conexión exitosa a la base de datos');
 });
 
 module.exports = connection;
